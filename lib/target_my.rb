@@ -25,9 +25,11 @@ class TargetMy
 
   def create_app(request, app_link, app_name, first_block_name = 'standard')
     puts 'Добавляем приложение'
+    # собираем cookies
     request.follow_location = true
     request.url = 'https://target.my.com/create_pad_groups/'
     request.http_get
+    # настраиваем и отправляем запрос
     request.follow_location = false
     request.url = 'https://target.my.com/api/v2/pad_groups.json'
     request.headers['X-CSRFToken'] = request.header_str.match(/(?<=csrftoken=)(.*?)(?=;)/)
@@ -40,9 +42,11 @@ class TargetMy
 
   def create_fullscreen_ad_unit(request, app_id)
     puts 'Добавляем fullscreen блок'
+    # собираем cookies
     request.follow_location = true
     request.url = "https://target.my.com/pad_groups/#{app_id}/create/"
     request.http_get
+    # настраиваем и отправляем запрос
     request.follow_location = false
     request.url = "https://target.my.com/api/v2/pad_groups/#{app_id}/pads.json"
     request.headers['X-CSRFToken'] = request.header_str.match(/(?<=csrftoken=)(.*?)(?=;)/)
